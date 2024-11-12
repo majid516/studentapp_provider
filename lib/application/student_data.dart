@@ -1,7 +1,4 @@
-import 'dart:developer';
 import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,24 +11,19 @@ class StudentDataController with ChangeNotifier {
   final picker = ImagePicker();
   static String profileImage = '';
 
-
-  void disposeImage(){
+  void disposeImage() {
     profileImage = '';
     notifyListeners();
   }
 
- Future<void> pickImageFormGallery() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+  Future<void> pickImageFormGallery() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      // Get app document directory
       final directory = await getApplicationDocumentsDirectory();
       final imagePath = '${directory.path}/${pickedFile.name}';
-
-      // Copy the image to a persistent directory
       final File savedImage = await File(pickedFile.path).copy(imagePath);
-
-      // Set the profileImage path to the new location
       profileImage = savedImage.path;
       notifyListeners();
     }
@@ -41,7 +33,8 @@ class StudentDataController with ChangeNotifier {
     if (profileImage != 'default_path' && File(profileImage).existsSync()) {
       return FileImage(File(profileImage));
     }
-    return NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0VykKbAbaa7tNQ143EKaeGO22WXPDSXQLaQ&s');
+    return const NetworkImage(
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0VykKbAbaa7tNQ143EKaeGO22WXPDSXQLaQ&s');
   }
 
   Future<void> getAllStudents() async {
@@ -59,7 +52,7 @@ class StudentDataController with ChangeNotifier {
       final studentDB = await Hive.openBox<StudentModel>('Student_db');
       studentDB.put(id, student);
     } catch (e) {
-      log('error found while adding ' + e.toString());
+      // log('error found while adding ' + e.toString());
     }
     getAllStudents();
     notifyListeners();
@@ -79,17 +72,19 @@ class StudentDataController with ChangeNotifier {
       await getAllStudents();
       notifyListeners();
     } catch (e) {
-      print('Error updating student: $e');
+      // print('Error updating student: $e');
       throw Exception('Failed to update student data: $e');
     }
   }
 
-
-  void filterStudents(String query){
+  void filterStudents(String query) {
     if (query.isEmpty) {
       filterStudent = List.from(studentListProvider);
-    }else{
-      filterStudent = studentListProvider.where(((student)=>student.name.toLowerCase().contains(query.toLowerCase()))).toList();
+    } else {
+      filterStudent = studentListProvider
+          .where(((student) =>
+              student.name.toLowerCase().contains(query.toLowerCase())))
+          .toList();
     }
     notifyListeners();
   }

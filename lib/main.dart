@@ -7,7 +7,7 @@ import 'package:student_app_provider/application/student_data.dart';
 import 'package:student_app_provider/application/sutudent_id_contoller.dart';
 import 'package:student_app_provider/core/constant_size/size.dart';
 import 'package:student_app_provider/infrastructure/model/sutdent_model.dart';
-import 'package:student_app_provider/presentation/main_screen.dart';
+import 'package:student_app_provider/presentation/main_screen/main_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

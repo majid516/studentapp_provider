@@ -1,11 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:student_app_provider/application/student_data.dart';
 import 'package:student_app_provider/core/constant_colors/colors.dart';
 import 'package:student_app_provider/core/constants/constants.dart';
 import 'package:student_app_provider/infrastructure/model/sutdent_model.dart';
+import 'package:student_app_provider/presentation/add_student/widget/text_field.dart';
 
 class AddNewStudent extends StatelessWidget {
   AddNewStudent({
@@ -66,10 +65,8 @@ class AddNewStudent extends StatelessWidget {
                               .pickImageFormGallery();
                         },
                         child: CircleAvatar(
-                          radius: 60,
-                            backgroundImage:value.getProfileImage()
-                             
-                        ),
+                            radius: 60,
+                            backgroundImage: value.getProfileImage()),
                       );
                     }),
                     Positioned(
@@ -83,11 +80,11 @@ class AddNewStudent extends StatelessWidget {
                   ],
                 ),
               ),
-              _buildTextField(
+              buildTextField(
                   nameController, 'Student Name', 'name is required'),
-              _buildTextField(ageController, 'Student Age', 'age is required'),
-              _buildTextField(phoneController, 'Phone', 'phone is required'),
-              _buildTextField(guardianController, 'Guardian Name',
+              buildTextField(ageController, 'Student Age', 'age is required'),
+              buildTextField(phoneController, 'Phone', 'phone is required'),
+              buildTextField(guardianController, 'Guardian Name',
                   'guardian name is required'),
               Padding(
                 padding:
@@ -118,13 +115,13 @@ class AddNewStudent extends StatelessWidget {
                             await Provider.of<StudentDataController>(context,
                                     listen: false)
                                 .updateStudentData(studentData);
-                                 Provider.of<StudentDataController>(context,
+                            Provider.of<StudentDataController>(context,
                                     listen: false)
                                 .disposeImage();
                           }
                           Navigator.pop(context);
                         } else {
-                          print('Form data is invalid');
+                          //   print('Form data is invalid');
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -142,40 +139,6 @@ class AddNewStudent extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTextField(TextEditingController controller, String hintText,
-      String validationMessage) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 3,
-            )
-          ],
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: TextFormField(
-          keyboardType: TextInputType.numberWithOptions(),
-          controller: controller,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return validationMessage;
-            }
-            return null;
-          },
-          decoration: InputDecoration(
-            border: OutlineInputBorder(borderSide: BorderSide.none),
-            hintText: hintText,
-            hintStyle: const TextStyle(color: Colors.grey, fontSize: 20),
           ),
         ),
       ),

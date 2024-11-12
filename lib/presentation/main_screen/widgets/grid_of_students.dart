@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:student_app_provider/application/student_data.dart';
 import 'package:student_app_provider/core/constant_colors/colors.dart';
 import 'package:student_app_provider/core/constants/constants.dart';
-import 'package:student_app_provider/presentation/student_data.dart';
+import 'package:student_app_provider/presentation/student_data/student_data.dart';
 class StudentGridTile extends StatelessWidget {
   final dynamic data;
   final int index;
